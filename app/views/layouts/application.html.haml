@@ -1,0 +1,17 @@
+!!! 5
+%html
+  %head
+    %title
+      TranslateX
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+
+  %body
+    %div.info
+      %p= notice
+    %div.error
+      %p= alert
+
+
+    = yield

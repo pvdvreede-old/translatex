@@ -2,16 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-group :development do
-  gem 'thin'
-end
-
 group :development, :test do
   gem 'sqlite3'
-end
-
-group :test do
+  gem 'thin'
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'capybara-webkit'
@@ -29,5 +24,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'haml'
 gem 'devise'
 gem 'jquery-rails'
