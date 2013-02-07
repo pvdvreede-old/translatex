@@ -54,4 +54,73 @@ describe "Translations" do
       page.should have_content('Create new translation')
     end
   end
+
+  describe "GET /translations/new" do
+    before :all do
+      @user = FactoryGirl.create :user
+    end
+
+    it "should redirect when not logged in" do
+      visit '/translations/new'
+      current_path.should eq "/login"
+    end
+
+    it "should display form when logged in" do
+      valid_sign_in @user
+      visit '/translations/new'
+      current_path.should eq "/translations/new"
+      page.should have_selector(".translation-form")
+    end
+
+    it "should save a valid translation for the user" do
+      valid_sign_in @user
+      visit '/translations/new'
+      within ".translation-form" do
+        fill_in "translation_name", :with => "My translation"
+        fill_in "translation_identifier", :with => "mytran1"
+        fill_in "translation_xslt", :with => "<root><h>test</h></root>"
+      end
+      click_button "Save"
+      current_path.should eq "/translations"
+      db_translation = Translation.where(
+        :name => "My translation",
+        :user_id => @user.id
+        ).first
+      db_translation.should_not be_nil
+      db_translation.identifier.should eq "mytran1"
+    end
+
+    it "should not save a translation without a name" do
+      valid_sign_in @user
+      visit '/translations/new'
+      within ".translation-form" do
+        fill_in "translation_identifier", :with => "mytran2"
+        fill_in "translation_xslt", :with => "<root><h>test</h></root>"
+      end
+      click_button "Save"
+      current_path.should eq "/translations/new"
+      page.should have_content("Name can't be blank")
+      Translation.where(
+        :identifier => "mytran2",
+        :user_id => @user.id
+        ).first.should be_nil
+    end
+
+    it "should not save a translation with invalid XML" do
+      valid_sign_in @user
+      visit '/translations/new'
+      within ".translation-form" do
+        fill_in "translation_name", :with => "My translation3"
+        fill_in "translation_identifier", :with => "mytran3"
+        fill_in "translation_xslt", :with => "<root><est</h></root>"
+      end
+      click_button "Save"
+      current_path.should eq "/translations/new"
+      page.should have_content("Xslt is not valid XML")
+      Translation.where(
+        :identifier => "mytran3",
+        :user_id => @user.id
+        ).first.should be_nil
+    end
+  end
 end

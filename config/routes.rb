@@ -1,6 +1,6 @@
 Translatex::Application.routes.draw do
   resources :translations
-
+  post '/translations/new' => 'translations#create'
 
   devise_for :users, :path => "",
     :path_names => {
@@ -10,5 +10,5 @@ Translatex::Application.routes.draw do
       :registration => 'register'
     }
 
-  root :to => "home#index"
+  root :to => "translations#index"
 end

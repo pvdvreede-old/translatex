@@ -1,6 +1,7 @@
 # controller to list and manipulate translations by the
 # current user
 class TranslationsController < ApplicationController
+
   # GET /translations
   def index
     @translations = current_user.translations.page(params[:page]).per(10)
@@ -11,13 +12,11 @@ class TranslationsController < ApplicationController
   end
 
   # GET /translations/new
-  # GET /translations/new.json
   def new
     @translation = Translation.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @translation }
+      format.html
     end
   end
 
@@ -26,18 +25,21 @@ class TranslationsController < ApplicationController
     @translation = Translation.find(params[:id])
   end
 
-  # POST /translations
-  # POST /translations.json
+  # POST /translations/new
   def create
     @translation = Translation.new(params[:translation])
+    @translation.user = current_user
 
     respond_to do |format|
       if @translation.save
-        format.html { redirect_to @translation, notice: 'Translation was successfully created.' }
-        format.json { render json: @translation, status: :created, location: @translation }
+        format.html do
+          redirect_to(
+            translations_path,
+            :notice => 'Translation was successfully created.'
+          )
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @translation.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
       end
     end
   end
@@ -49,11 +51,11 @@ class TranslationsController < ApplicationController
 
     respond_to do |format|
       if @translation.update_attributes(params[:translation])
-        format.html { redirect_to @translation, notice: 'Translation was successfully updated.' }
+        format.html { redirect_to @translation, :notice => 'Translation was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @translation.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @translation.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -56,7 +56,8 @@ describe 'the registration process' do
       current_path.should eq('/register')
       page.should have_content("Password doesn't match confirmation")
     end
-
   end
+
+  describe ''
 
 end

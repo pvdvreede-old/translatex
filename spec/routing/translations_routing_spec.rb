@@ -17,11 +17,12 @@ describe TranslationsController do
     end
 
     it "routes to #create" do
-      post("/translations").should route_to("translations#create")
+      post("/translations/new").should route_to("translations#create")
     end
 
     it "routes to #update" do
-      put("/translations/1").should route_to("translations#update", :id => "1")
+      put("/translations/1/edit").should
+        route_to("translations#update", :id => "1")
     end
 
     it "routes to #destroy" do

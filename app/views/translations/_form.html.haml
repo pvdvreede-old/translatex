@@ -1,0 +1,32 @@
+= form_for @translation, :url => translations_new_path, :html => { :class => "translation-form"} do |f|
+  - if @translation.errors.any?
+    %div#error_explanation
+      %h3
+        = pluralize(@translation.errors.count, "error")
+        prohibit this translation being saved:
+
+      %ul
+        - @translation.errors.full_messages.each do |msg|
+          %li= msg
+
+  %div
+    = f.label :name
+    = f.text_field :name
+
+  %div
+    = f.label :identifier
+    = f.text_field :identifier
+
+  %div
+    = f.label :description
+    = f.text_area :description, :size => "60x3"
+
+  %div
+    = f.label :xslt
+    = f.text_area :xslt, :size => "60x15"
+
+  %div
+    = f.check_box :active
+    = f.label :active, "Activate"
+
+  = f.submit "Save"
