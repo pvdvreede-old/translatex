@@ -1,3 +1,4 @@
+# validation to confirm that a string field is valid xml
 class XmlValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)

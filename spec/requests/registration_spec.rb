@@ -44,7 +44,8 @@ describe 'the registration process' do
       page.should have_content("Password can't be blank")
     end
 
-    it 'should not allow registration without password same as confirmation password' do
+    it 'should not allow registration without password
+        same as confirmation password' do
       visit '/register'
       within '.register' do
         fill_in 'Email', :with => 'user@test2.com'

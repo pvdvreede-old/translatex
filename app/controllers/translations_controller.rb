@@ -1,3 +1,5 @@
+# controller to list and manipulate translations by the
+# current user
 class TranslationsController < ApplicationController
   # GET /translations
   def index

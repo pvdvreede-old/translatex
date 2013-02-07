@@ -12,7 +12,8 @@ describe TranslationsController do
     end
 
     it "routes to #edit" do
-      get("/translations/1/edit").should route_to("translations#edit", :id => "1")
+      get("/translations/1/edit").
+        should route_to("translations#edit", :id => "1")
     end
 
     it "routes to #create" do
@@ -24,7 +25,8 @@ describe TranslationsController do
     end
 
     it "routes to #destroy" do
-      delete("/translations/1").should route_to("translations#destroy", :id => "1")
+      delete("/translations/1").
+        should route_to("translations#destroy", :id => "1")
     end
 
   end

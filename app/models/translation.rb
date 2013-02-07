@@ -1,3 +1,5 @@
+# represents and incoming endpoint and translation
+# belongs to a user
 class Translation < ActiveRecord::Base
   attr_accessible :name, :identifier, :description, :xslt, :active
 

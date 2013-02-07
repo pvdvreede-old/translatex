@@ -21,9 +21,18 @@ describe Translation do
 
     it "MUST have valid XML in xslt or be blank" do
       FactoryGirl.build(:translation).should be_valid
-      FactoryGirl.build(:translation, :xslt => "sdfsdf>fsdf").should_not be_valid
-      FactoryGirl.build(:translation, :xslt => "<valid>true</valid>").should be_valid
-      FactoryGirl.build(:translation, :xslt => "<valid>true").should_not be_valid
+      FactoryGirl.build(
+        :translation,
+        :xslt => "sdfsdf>fsdf"
+        ).should_not be_valid
+      FactoryGirl.build(
+        :translation,
+        :xslt => "<valid>true</valid>"
+        ).should be_valid
+      FactoryGirl.build(
+        :translation,
+        :xslt => "<valid>true"
+        ).should_not be_valid
     end
 
     it "MUST have an identifier" do
@@ -35,7 +44,10 @@ describe Translation do
     it "MUST only have url friendly characters in the identifier" do
       FactoryGirl.build(:translation).should be_valid
       ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"].each do |char|
-        FactoryGirl.build(:translation, :identifier => "sdfsd#{char}sdf").should_not be_valid
+        FactoryGirl.build(
+          :translation,
+          :identifier => "sdfsd#{char}sdf"
+          ).should_not be_valid
       end
     end
   end
