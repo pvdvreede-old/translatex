@@ -4,7 +4,7 @@ FactoryGirl.define do
   sequence(:identifier) { |n| "ident#{n}" }
 
   factory :translation do
-    name { Faker::Lorem.words(4) }
+    name { Faker::Lorem.sentence(2) }
     description { Faker::Lorem.paragraph(3) }
     user
     identifier

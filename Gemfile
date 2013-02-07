@@ -27,4 +27,5 @@ end
 
 gem 'haml'
 gem 'devise'
+gem 'kaminari'
 gem 'jquery-rails'
