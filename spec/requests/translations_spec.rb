@@ -123,4 +123,109 @@ describe "Translations" do
         ).first.should be_nil
     end
   end
+
+  describe "GET /translation/:id/edit" do
+    before :all do
+      @user1 = FactoryGirl.create :user
+      @user2 = FactoryGirl.create :user
+    end
+
+    before :each do
+      @translation = FactoryGirl.create :translation, :user => @user1
+    end
+
+    it "should redirect when not logged in" do
+      visit "/translations/#{@translation.id.to_s}/edit"
+      current_path.should eq "/login"
+    end
+
+    it "should show 404 when translation is not users" do
+      valid_sign_in @user2
+      lambda {
+        visit "/translations/#{@translation.id.to_s}/edit"
+      }.should raise_error(ActionController::RoutingError)
+    end
+
+    it "should show edit screen for translation owner" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      page.should have_selector(".translation-form")
+    end
+
+    it "should show the right translation for editing" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      find_field("translation_name").value.should eq @translation.name
+      find_field("translation_description").
+        value.to_s.should eq @translation.description.to_s
+      find_field("translation_identifier").
+        value.to_s.should eq @translation.identifier
+      find_field("translation_xslt").
+        value.to_s.should eq @translation.xslt.to_s
+    end
+
+    it "should save valid updates to translation" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      save_translation(
+        "name changed",
+        "changedident",
+        "<changed><r>true</r></changed>"
+      )
+
+      db_translation = Translation.find(@translation.id)
+
+      db_translation.should_not be_nil
+      db_translation.identifier.should eq "changedident"
+      db_translation.name.should eq "name changed"
+      db_translation.user_id.should eq @user1.id
+      current_path.should eq "/translations"
+    end
+
+    it "should not update a translation without a name" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      save_translation(
+        "",
+        "changed_ident",
+        "<changed><r>true</r></changed>"
+      )
+      current_path.should eq "/translations/#{@translation.id.to_s}/edit"
+      page.should have_content("Name can't be blank")
+    end
+
+    it "should not update a translation without an identifier" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      save_translation(
+        "name changed",
+        "",
+        "<changed><r>true</r></changed>"
+      )
+      current_path.should eq "/translations/#{@translation.id.to_s}/edit"
+      page.should have_content("Identifier can't be blank")
+    end
+
+    it "should not update a translation without valid xml" do
+      valid_sign_in @user1
+      visit "/translations/#{@translation.id.to_s}/edit"
+      save_translation(
+        "name changed",
+        "changed_ident",
+        "<changed><rtrue</r></changed>"
+      )
+      current_path.should eq "/translations/#{@translation.id.to_s}/edit"
+      page.should have_content("Xslt is not valid XML")
+    end
+  end
+end
+
+def save_translation(name, identifier, xslt, describe = nil)
+  within ".translation-form" do
+    fill_in "translation_name", :with => name
+    fill_in "translation_identifier", :with => identifier
+    fill_in "translation_description", :with => describe unless describe.nil?
+    fill_in "translation_xslt", :with => xslt
+  end
+  click_button "Save"
 end

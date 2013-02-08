@@ -22,7 +22,11 @@ class TranslationsController < ApplicationController
 
   # GET /translations/1/edit
   def edit
-    @translation = Translation.find(params[:id])
+    begin
+      @translation = current_user.translations.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      not_found
+    end
   end
 
   # POST /translations/new
@@ -45,17 +49,23 @@ class TranslationsController < ApplicationController
   end
 
   # PUT /translations/1
-  # PUT /translations/1.json
   def update
-    @translation = Translation.find(params[:id])
+    begin
+      @translation = current_user.translations.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      not_found
+    end
 
     respond_to do |format|
       if @translation.update_attributes(params[:translation])
-        format.html { redirect_to @translation, :notice => 'Translation was successfully updated.' }
-        format.json { head :no_content }
+        format.html do
+          redirect_to(
+            translations_path,
+            :notice => 'Translation was successfully updated.'
+          )
+        end
       else
         format.html { render :action => "edit" }
-        format.json { render :json => @translation.errors, :status => :unprocessable_entity }
       end
     end
   end
