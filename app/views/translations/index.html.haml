@@ -1,18 +1,22 @@
-%h2 Translations
+%div.row
+  %div.twelve.columns
 
-%div.tran-create
-  = link_to "Create new translation", new_translation_path
+    %h2 Translations
 
-- unless @translations.empty?
+    %div.tran-create
+      = link_to "Create new translation", new_translation_path
 
-  = paginate @translations
+    - unless @translations.empty?
 
-  %ul.translations
-    - @translations.each do |tran|
-      %li.translation
-        %span.tran-name= tran.name
-        %span.tran-description= tran.description
-        %span.tran-active= tran.active
-- else
-  %div.empty-list
-    %p You do not currently have any transations.
+      = paginate @translations
+
+      %ul.translations
+        - @translations.each do |tran|
+          %li.translation
+            %p.tran-name
+              = link_to tran.name, edit_translation_path(tran)
+            %p.tran-description= tran.description
+            %p.tran-active= tran.active
+    - else
+      %div.empty-list
+        %p You do not currently have any transations.

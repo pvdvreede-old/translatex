@@ -1,0 +1,27 @@
+%nav.top-bar
+  %ul
+    %li.name
+      %h1
+        %a{ 'href' => '#' } TranslateX
+    %li.toggle-topbar
+      %a{ 'href' => '#' }
+
+  %section
+    %ul.left
+      %li
+        = link_to "Translations", new_translation_path
+
+    %ul.right
+      - if user_signed_in?
+
+        %li
+          = link_to current_user.email, edit_user_registration_path
+        %li.divider
+        %li
+          =link_to 'Sign out', destroy_user_session_path, :method => :delete
+      - else
+        %li
+          = link_to "Register", new_user_registration_path
+        %li.divider
+        %li
+          = link_to "Login", new_user_session_path

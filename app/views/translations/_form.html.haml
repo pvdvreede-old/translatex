@@ -15,7 +15,11 @@
 
   %div
     = f.label :identifier
-    = f.text_field :identifier
+    %div.row.collapse
+      %div.four.mobile-two.columns
+        %span.prefix= h("https://translatex.in/request/#{current_user.identifier}/")
+      %div.eight.mobile-two.columns
+        = f.text_field :identifier
 
   %div
     = f.label :description
@@ -29,4 +33,6 @@
     = f.check_box :active
     = f.label :active, "Activate"
 
-  = f.submit "Save"
+  = f.submit "Save", :class => 'button'
+
+  = link_to "Back", translations_path

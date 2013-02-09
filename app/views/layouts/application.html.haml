@@ -6,12 +6,25 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    %meta{ 'name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0' }
 
   %body
-    %div.info
-      %p= notice
-    %div.error
-      %p= alert
+    %header.row
+      = render :partial => 'top_menu'
 
+    %div.row
+      - if defined?(:notice) && notice
+        %div.success.alert-box
+          = notice
+          %a.close{ 'href' => '' } &times;
+
+      - if defined?(:alert) && alert
+        %div.alert.alert-box
+          = alert
+          %a.close{ 'href' => '' } &times;
 
     = yield
+
+    %div.row
+      %footer
+        %p &copy; Copyright 2013, Paul Van de Vreede
