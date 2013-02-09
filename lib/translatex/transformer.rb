@@ -1,8 +1,7 @@
-# class that does the actual transformation of the xml
-# via xslt
-
 module Translatex
 
+  # class that does the actual transformation of the xml
+  # via xslt
   class Transformer
 
     def initialize(xml, xslt)
