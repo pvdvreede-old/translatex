@@ -69,3 +69,14 @@ def valid_sign_in(user)
   click_button 'Login'
   current_path.should_not eq '/login'
 end
+
+def load_request_response(file_prefix)
+  post_xml = File.read("#{Rails.root}/spec/files/#{file_prefix}_request.xml")
+  expected_xml = File.read(
+    "#{Rails.root}/spec/files/#{file_prefix}_response.xml"
+  )
+  xslt_xml = File.read(
+    "#{Rails.root}/spec/files/#{file_prefix}_xslt.xml"
+  )
+  return post_xml, expected_xml, xslt_xml
+end

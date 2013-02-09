@@ -4,6 +4,9 @@ Translatex::Application.routes.draw do
   put '/translations/:id/edit' => 'translations#update',
     :as => :translations_edit
 
+  # generic route for all api requests
+  post '/request/:user/:translation' => 'requests#index', :as => "requests"
+
   devise_for :users, :path => "",
     :path_names => {
       :sign_in => 'login',

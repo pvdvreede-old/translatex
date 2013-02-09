@@ -12,6 +12,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'faker'
   gem 'cane'
+  gem 'equivalent-xml'
 end
 
 # Gems used only for assets and not required
