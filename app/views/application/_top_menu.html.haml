@@ -8,17 +8,19 @@
 
   %section
     %ul.left
-      %li
-        = link_to "Translations", translations_path
+      - if user_signed_in?
+        %li
+          %a{ 'href' => '#', 'class' => 'tx-icon-bars has-tip', 'title' => 'Monitor' }
+        %li
+          = link_to '', translations_path, :class => 'tx-icon-loop has-tip', :title => 'Translations'
 
     %ul.right
       - if user_signed_in?
-
         %li
-          = link_to current_user.email, edit_user_registration_path
+          = link_to '', edit_user_registration_path, :class => 'tx-icon-user has-tip', :title => "Profile details for #{current_user.email}"
         %li.divider
         %li
-          =link_to 'Sign out', destroy_user_session_path, :method => :delete
+          =link_to '', destroy_user_session_path, :method => :delete, :class => 'tx-icon-eject has-tip', :title => 'Sign out'
       - else
         %li
           = link_to "Register", new_user_registration_path
