@@ -3,22 +3,29 @@
 
     %h2 Translations
 
-    %div.tx-tran-create
-      = link_to "Create new translation", new_translation_path
+    %div.row
+      %div.twelve.columns.tx-tran-create
+        = link_to "Create new translation", new_translation_path
 
     - unless @translations.empty?
+      %div.row
+        %div.twelve.columns
+          = paginate @translations
 
-      = paginate @translations
-
-      %ul.tx-translations
-        - @translations.each do |tran|
-          %li.tx-translation
-            %p.tx-list-header
-              = link_to tran.name, edit_translation_path(tran)
-            %p.tx-list-description= tran.description
-            %div.tx-list-statuses
-              %span.has-tip{ 'title' => get_active_description(tran), 'class' => get_active_icon(tran), 'style' => 'font-size: 22pt;' }
-              %span.has-tip{ 'title' => get_secure_description(tran), 'class' => get_secure_icon(tran), 'style' => 'font-size: 22pt;' }
+      %div.row
+        %div.twelve.columns
+          %ul.tx-translations
+            - @translations.each do |tran|
+              %li.tx-translation
+                %p.tx-list-header
+                  = link_to tran.name, edit_translation_path(tran)
+                %p.tx-list-description= tran.description
+                %div.tx-list-statuses
+                  %span.has-tip{ 'title' => get_active_description(tran), 'class' => get_active_icon(tran), 'style' => 'font-size: 22pt;' }
+                  %span.has-tip{ 'title' => get_secure_description(tran), 'class' => get_secure_icon(tran), 'style' => 'font-size: 22pt;' }
+      %div.row
+        %div.twelve.columns
+          = paginate @translations
     - else
       %div.tx-empty-list
         %p You do not currently have any transations.
