@@ -1,4 +1,4 @@
-= form_for @translation, :url => (@translation.new_record?) ? translations_new_path : translations_edit_path(@translation), :html => { :class => "translation-form"} do |f|
+= form_for @translation, :url => (@translation.new_record?) ? translations_new_path : translations_edit_path(@translation), :html => { :class => "tx-translation-form"} do |f|
   - if @translation.errors.any?
     %div#error_explanation
       %h3

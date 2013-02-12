@@ -1,3 +1,27 @@
-// Place all the styles related to the translations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.tx-translations {
+  list-style: none;
+}
+
+.tx-translation {
+  padding: 15px;
+  position: relative;
+}
+
+.tx-translation:hover {
+  background-color: #EAEBEC;
+}
+
+.tx-list-header {
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+.tx-list-statuses {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.tx-list-statuses span {
+  padding-left: 30px;
+}

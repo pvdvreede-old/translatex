@@ -3,20 +3,22 @@
 
     %h2 Translations
 
-    %div.tran-create
+    %div.tx-tran-create
       = link_to "Create new translation", new_translation_path
 
     - unless @translations.empty?
 
       = paginate @translations
 
-      %ul.translations
+      %ul.tx-translations
         - @translations.each do |tran|
-          %li.translation
-            %p.tran-name
+          %li.tx-translation
+            %p.tx-list-header
               = link_to tran.name, edit_translation_path(tran)
-            %p.tran-description= tran.description
-            %p.tran-active= tran.active
+            %p.tx-list-description= tran.description
+            %div.tx-list-statuses
+              %span.has-tip{ 'title' => get_active_description(tran), 'class' => get_active_icon(tran), 'style' => 'font-size: 22pt;' }
+              %span.has-tip{ 'title' => get_secure_description(tran), 'class' => get_secure_icon(tran), 'style' => 'font-size: 22pt;' }
     - else
-      %div.empty-list
+      %div.tx-empty-list
         %p You do not currently have any transations.
