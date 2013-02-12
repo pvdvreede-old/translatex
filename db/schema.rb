@@ -11,17 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130208022129) do
+ActiveRecord::Schema.define(:version => 20130212054142) do
 
   create_table "translations", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.string   "description"
     t.text     "xslt"
-    t.boolean  "active",      :default => true
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "active",              :default => true
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "identifier"
+    t.boolean  "api_key_enabled"
+    t.string   "api_key"
+    t.boolean  "basic_auth_enabled"
+    t.string   "basic_auth_username"
+    t.string   "basic_auth_password"
   end
 
   create_table "users", :force => true do |t|
