@@ -25,13 +25,45 @@
     = f.label :description
     = f.text_area :description, :size => "60x3"
 
+  %fieldset
+    %legend Security
+
+    %div.row
+      %div.six.columns
+        %div
+          %span
+            = f.check_box :api_key_enabled
+            Api key enabled
+
+        %br
+
+        %div
+          = f.label :api_key
+          = f.text_field :api_key
+          %a.js-api-generator{ 'href' => '#' } Auto generate API key
+
+      %div.six.columns
+        %div
+          %span
+            = f.check_box :basic_auth_enabled
+            Basic Authentication Enabled
+        %br
+
+        %div
+          = f.label :basic_auth_username
+          = f.text_field :basic_auth_username
+
+        %div
+          = f.label :basic_auth_password
+          = f.text_field :basic_auth_password
   %div
     = f.label :xslt
     = f.text_area :xslt, :size => "60x15"
 
   %div
-    = f.check_box :active
-    = f.label :active, "Activate"
+    %span
+      = f.check_box :active
+      Activate
 
   = f.submit "Save", :class => 'button'
 

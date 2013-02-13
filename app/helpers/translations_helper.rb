@@ -18,10 +18,22 @@ module TranslationsHelper
   end
 
   def get_secure_icon(tran)
-    "tx-icon-unlock-stroke"
+    if tran.api_key_enabled || tran.basic_auth_enabled
+      "tx-icon-lock-stroke"
+    else
+      "tx-icon-unlock-stroke"
+    end
   end
 
   def get_secure_description(tran)
-    "This endpoint is accessible by anyone."
+    if tran.api_key_enabled && tran.basic_auth_enabled
+      "This endpoint is restricted by api key and basic authentication"
+    elsif tran.api_key_enabled
+      "This endpoint is restricted by api key"
+    elsif tran.basic_auth_enabled
+      "This endpoint is restricted by basic authentication"
+    else
+      "This endpoint is accessible by anyone"
+    end
   end
 end

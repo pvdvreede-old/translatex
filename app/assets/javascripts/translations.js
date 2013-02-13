@@ -1,6 +1,7 @@
 //= require ace/ace-bookmarklet
 //= require ace/theme-textmate
 //= require ace/mode-xml
+//= require generate_api_key
 
 $(document).ready(function() {
   var xslt_input = $("#translation_xslt");
