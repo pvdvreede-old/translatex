@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
+
+group :development do
+  gem 'thin'
+end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'thin'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
