@@ -7,6 +7,8 @@ class Translation < ActiveRecord::Base
 
   belongs_to :user
 
+  after_initialize :set_xslt_template
+
   validates :name, :presence => true
   validates :user, :presence => true
   validates :xslt, :xml => true
@@ -20,6 +22,16 @@ class Translation < ActiveRecord::Base
   validates_with SetupFieldsValidator,
     :bool_field => :basic_auth_enabled,
     :value_fields_array => [:basic_auth_username, :basic_auth_password]
+
+  def set_xslt_template
+    self.xslt ||= <<-XSLTBASE
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <!-- put your xslt here -->
+  </xsl:template>
+</xsl:stylesheet>
+XSLTBASE
+  end
 
   def authentication_active?
     self.api_key_enabled || self.basic_auth_enabled

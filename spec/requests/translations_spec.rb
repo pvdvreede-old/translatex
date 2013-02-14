@@ -127,6 +127,12 @@ describe "Translations" do
       page.should have_selector(".tx-translation-form")
     end
 
+    it "should show default xslt template when loaded" do
+      valid_sign_in @user
+      visit '/translations/new'
+      find_field("translation_xslt").value.should include "<!-- put your xslt here -->"
+    end
+
     it "should save a valid translation for the user" do
       valid_sign_in @user
       visit '/translations/new'
