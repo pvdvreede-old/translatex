@@ -5,7 +5,8 @@ Translatex::Application.routes.draw do
     :as => :translations_edit
 
   # generic route for all api requests
-  post '/request/:user/:translation' => 'requests#index', :as => "requests"
+  match '/request/:user/:translation' => 'requests#index',
+    :as => "requests", :method => [:get, :post, :put, :delete]
 
   devise_for :users, :path => "",
     :path_names => {

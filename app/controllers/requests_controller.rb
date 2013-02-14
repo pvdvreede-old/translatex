@@ -2,7 +2,10 @@
 # the user is checked and translation is obtained
 class RequestsController < ApplicationController
   skip_before_filter :authenticate_user!
-  before_filter :get_user, :get_translation
+  before_filter :check_method,
+                :get_user,
+                :get_translation,
+                :check_authentication
 
   def index
     post_body = request.body.read
@@ -33,6 +36,27 @@ class RequestsController < ApplicationController
     if @translation.nil?
       not_found
     end
+  end
+
+  def check_method
+    unless request.method.upcase == "POST"
+      head :status => 405
+    end
+  end
+
+  def check_authentication
+    ApiAuthenticatorService.new(@translation, self).
+      authenticate
+  end
+
+  def not_found
+    render :status => 404,
+      :text => "<error>The resource does not exist</error>"
+  end
+
+  def unauthorised
+    render :status => 403,
+      :text => "<error>You must provide correct authentication details.</error>"
   end
 
 end

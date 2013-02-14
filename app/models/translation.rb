@@ -20,4 +20,12 @@ class Translation < ActiveRecord::Base
   validates_with SetupFieldsValidator,
     :bool_field => :basic_auth_enabled,
     :value_fields_array => [:basic_auth_username, :basic_auth_password]
+
+  def authentication_active?
+    self.api_key_enabled || self.basic_auth_enabled
+  end
+
+  def all_authentication_active?
+    self.api_key_enabled && self.basic_auth_enabled
+  end
 end
